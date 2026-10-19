@@ -1,7 +1,5 @@
 package org.example.adapter;
 
-import org.example.fileWorking.FileSource;
-
 import java.nio.file.Path;
 
 public class ChoiceExpansion {

@@ -1,4 +1,4 @@
-package org.example.businessLogic;
+package org.example.model;
 
 import java.time.LocalDateTime;
 

@@ -1,6 +1,6 @@
 package org.example.adapter;
 
-import org.example.businessLogic.Order;
+import org.example.model.Order;
 
 import java.io.IOException;
 import java.nio.file.Files;

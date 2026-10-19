@@ -1,4 +1,4 @@
-package org.example.fileWorking;
+package org.example.writer;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

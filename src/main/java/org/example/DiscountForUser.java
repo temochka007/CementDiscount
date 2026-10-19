@@ -1,40 +1,30 @@
 package org.example;
 
 import org.example.adapter.ChoiceExpansion;
-import org.example.businessLogic.DiscountBusiness;
-import org.example.businessLogic.Order;
-import org.example.businessLogic.PriceCalculator;
-import org.example.businessLogic.SortingCompany;
-import org.example.fileWorking.FileSource;
-import org.example.fileWorking.FileWriter;
+import org.example.model.Order;
+import org.example.service.ConsoleForUser;
+import org.example.service.DiscountBusiness;
+import org.example.service.PriceCalculator;
+import org.example.service.SortingCompany;
+import org.example.adapter.FileSource;
+import org.example.writer.FileWriter;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
-
-import static org.example.adapter.ChoiceExpansion.create;
 
 public class DiscountForUser {
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Введите путь к файлу: ");
-        String inputPath = scanner.nextLine();
-
-        System.out.print("Введите путь к выходному файлу: ");
-        String outputPath = scanner.nextLine();
-
-        double startDiscount = 50.0;
-        double stepDiscount = 5.0;
-        double priceKg = 10.0;
-
-        Path input = Paths.get(inputPath);
-        Path output = Paths.get(outputPath);
-
-
+        ConsoleForUser user = new ConsoleForUser();
         try {
+            Path input = user.getIntputPath();
+            Path output = user.getOutPath();
+
+            double startDiscount = 50.0;
+            double stepDiscount = 5.0;
+            double priceKg = 10.0;
+
             FileSource source = ChoiceExpansion.create(input);
 
             List<Order> orders = source.readOrders();
@@ -56,11 +46,10 @@ public class DiscountForUser {
             FileWriter fileWriter = new FileWriter();
             fileWriter.writeResult(output, sorting);
 
-
         }catch (IOException e){
             System.err.println("Ошибка работы с файлами: ");
         }finally {
-            scanner.close();
+            user.close();
         }
 
 

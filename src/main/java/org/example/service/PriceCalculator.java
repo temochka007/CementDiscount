@@ -1,4 +1,6 @@
-package org.example.businessLogic;
+package org.example.service;
+
+import org.example.model.Order;
 
 public class PriceCalculator {
     private double priceKg;

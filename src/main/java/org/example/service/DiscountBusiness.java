@@ -1,4 +1,4 @@
-package org.example.businessLogic;
+package org.example.service;
 
 public class DiscountBusiness {
     private double startDiscount;
