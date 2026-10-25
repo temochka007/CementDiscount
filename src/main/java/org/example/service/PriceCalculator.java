@@ -3,8 +3,8 @@ package org.example.service;
 import org.example.model.Order;
 
 public class PriceCalculator {
-    private double priceKg;
-    private DiscountBusiness discountBusiness;
+    private final double priceKg;
+    private final DiscountBusiness discountBusiness;
 
     public PriceCalculator(double priceKg, DiscountBusiness discountBusiness) {
         this.priceKg = priceKg;

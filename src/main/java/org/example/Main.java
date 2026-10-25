@@ -1,6 +1,12 @@
 package org.example;
 
+import org.example.adapter.ChoiceExpansionFactory;
+import org.example.adapter.GridFileAdapter;
+import org.example.adapter.TxtFileAdapter;
+import org.example.service.DiscountBusiness;
 import org.example.service.OrderAlgorithm;
+import org.example.service.PriceCalculator;
+import org.example.service.SortingCompany;
 import org.example.ui.ConsoleForUser;
 import org.example.writer.FileWriter;
 
@@ -13,19 +19,20 @@ public class Main {
 
         ConsoleForUser user = new ConsoleForUser();
 
+        ChoiceExpansionFactory factory = new ChoiceExpansionFactory();
+
+        DiscountBusiness discountBusiness = new DiscountBusiness(50.0, 5.0);
+        PriceCalculator priceCalculator = new PriceCalculator(10.0, discountBusiness);
+        SortingCompany sortingCompany = new SortingCompany();
+        FileWriter fileWriter = new FileWriter();
+        OrderAlgorithm algorithm = new OrderAlgorithm(factory, priceCalculator, sortingCompany);
 
         try {
             Path intputPath = user.getIntputPath();
             Path outputPath = user.getOutPath();
 
-            double startDiscount = 50.0;
-            double stepDiscount = 5.0;
-            double priceKg = 10.0;
-
-            OrderAlgorithm algorithm = new OrderAlgorithm(startDiscount, stepDiscount, priceKg);
             Map<String, Double> sorting = algorithm.algorithmic(intputPath);
 
-            FileWriter fileWriter = new FileWriter();
             fileWriter.writeResult(outputPath, sorting);
 
         }catch (IOException e){

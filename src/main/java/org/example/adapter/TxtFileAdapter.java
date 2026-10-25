@@ -10,14 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TxtFileAdapter implements FileSource {
-    private final Path path;
-
-    public TxtFileAdapter(Path path) {
-        this.path = path;
-    }
 
     @Override
-    public List<Order> readOrders() throws IOException {
+    public List<Order> readOrders(Path path) throws IOException {
         List<Order> orders = new ArrayList<>();
         List<String> lines = Files.readAllLines(path);
 
@@ -29,7 +24,12 @@ public class TxtFileAdapter implements FileSource {
 
             orders.add(new Order(ts, company, qty));
         }
-
         return orders;
     }
+
+    public boolean canRead(Path path){
+        String fileName = path.getFileName().toString();
+        return fileName.endsWith(".txt");
+    }
+
 }

@@ -12,6 +12,7 @@ public class FileWriter {
             for (var entry : sorting.entrySet()) {
                 String company = entry.getKey();
                 double total = entry.getValue();
+                writer.write(String.format("%s - %.2f", company, total));
                 writer.newLine();
             }
         }

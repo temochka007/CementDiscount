@@ -2,12 +2,13 @@ package org.example.service;
 
 import org.example.model.Order;
 
+import java.util.AbstractMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class SortingCompany {
-    public Map<String, Double> sortingCompany(List<Map.Entry<Order, Double>> ordersWithPrice) {
+    public Map<String, Double> sortingForCompany(List<AbstractMap.SimpleEntry<Order, Double>> ordersWithPrice) {
         Map<String, Double> result = new LinkedHashMap<>();
         for (var entry : ordersWithPrice) {
             Order order = entry.getKey();

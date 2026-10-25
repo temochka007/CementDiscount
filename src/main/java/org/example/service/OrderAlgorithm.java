@@ -9,37 +9,29 @@ import java.util.*;
 
 public class OrderAlgorithm {
 
-    private final double startDiscount;
-    private final double stepDiscount;
-    private final double priceKg;
+    private final ChoiceExpansionFactory factory;
+    private final PriceCalculator priceCalculator;
+    private final SortingCompany sortingCompany;
 
-    public OrderAlgorithm(double startDiscount, double stepDiscount, double priceKg) {
-        this.startDiscount = startDiscount;
-        this.stepDiscount = stepDiscount;
-        this.priceKg = priceKg;
+    public OrderAlgorithm(ChoiceExpansionFactory factory, PriceCalculator priceCalculator, SortingCompany sortingCompany) {
+        this.factory = factory;
+        this.priceCalculator = priceCalculator;
+        this.sortingCompany = sortingCompany;
     }
 
     public Map<String, Double> algorithmic(Path inputPath) throws IOException {
-
-        ChoiceExpansionFactory factory = new ChoiceExpansionFactory(List.of());
-
-        FileSource source = factory.create(inputPath);
-        List<Order> orders = source.readOrders();
+        FileSource source = factory.getAdapter(inputPath);
+        List<Order> orders = source.readOrders(inputPath);
 
         orders.sort(Comparator.comparing(Order::getTimeStamp));
 
-        DiscountBusiness discountBusiness = new DiscountBusiness(startDiscount, stepDiscount);
-        PriceCalculator priceCalculator = new PriceCalculator(priceKg, discountBusiness);
-
-        List<Map.Entry<Order, Double>> ordersWithPrice = new ArrayList<>();
+        List<AbstractMap.SimpleEntry<Order, Double>> ordersWithPrice = new ArrayList<>();
         for (int i = 0; i < orders.size(); i++){
-            Order order = orders.get(i);
-            double price = priceCalculator.calculator(order, i);
-            ordersWithPrice.add(new AbstractMap.SimpleEntry<>(order, price));
+            double price = priceCalculator.calculator(orders.get(i), i);
+            ordersWithPrice.add(new AbstractMap.SimpleEntry<>(orders.get(i), price));
         }
-        SortingCompany sortingCompany = new SortingCompany();
-        return sortingCompany.sortingCompany(ordersWithPrice);
 
+        return sortingCompany.sortingForCompany(ordersWithPrice);
     }
 
 }

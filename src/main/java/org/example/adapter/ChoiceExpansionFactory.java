@@ -1,21 +1,33 @@
 package org.example.adapter;
 
+import org.example.writer.FileWriter;
+
 import java.nio.file.Path;
+import java.security.cert.CertPathParameters;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ChoiceExpansionFactory {
-    private final List<ChoiceExpansion> strategies;
+   private final Map<String, FileSource> adapterExtension;
 
-    public ChoiceExpansionFactory(List<ChoiceExpansion> strategies) {
-        this.strategies = strategies;
-    }
+   public ChoiceExpansionFactory(){
+       adapterExtension = new HashMap<>();
+       adapterExtension.put(".txt", new TxtFileAdapter());
+       adapterExtension.put("_ext", new GridFileAdapter());
+   }
+    public FileSource getAdapter(Path path){
+       String fileName = path.getFileName().toString();
+       int index = fileName.lastIndexOf(".");
 
-    public FileSource create(Path path){
-        for (ChoiceExpansion strategy : strategies){
-            if (strategy.canRead(path)){
-                return strategy.create(path);
-            }
-        }
-        return null;
+       String key;
+       if (index <= 0 || index == fileName.length() -1){
+           key = "_ext";
+       }else {
+           key = ".txt";
+       }
+       FileSource adapter = adapterExtension.get(key);
+
+       return adapter;
     }
 }

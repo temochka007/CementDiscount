@@ -11,14 +11,8 @@ import java.util.List;
 
 public class GridFileAdapter implements FileSource {
 
-    private final Path path;
-
-    public GridFileAdapter(Path path) {
-        this.path = path;
-    }
-
     @Override
-    public List<Order> readOrders() throws IOException {
+    public List<Order> readOrders(Path path) throws IOException {
         List<Order> orders = new ArrayList<>();
         List<String> lines = Files.readAllLines(path);
 
@@ -30,8 +24,11 @@ public class GridFileAdapter implements FileSource {
 
             orders.add(new Order(ts, company, qty));
         }
-
         return orders;
     }
-
+    public boolean canRead(Path path){
+        String fileName = path.getFileName().toString();
+        int index = fileName.lastIndexOf(".");
+        return index <= 0 || index == fileName.length() - 1;
+    }
 }

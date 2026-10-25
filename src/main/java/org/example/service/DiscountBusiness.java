@@ -1,8 +1,8 @@
 package org.example.service;
 
 public class DiscountBusiness {
-    private double startDiscount;
-    private double stepDiscount;
+    private final double startDiscount;
+    private final double stepDiscount;
 
     public DiscountBusiness(double startDiscount, double stepDiscount) {
         this.startDiscount = startDiscount;
