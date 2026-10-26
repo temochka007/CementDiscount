@@ -9,4 +9,6 @@ import java.util.List;
 public interface FileSource{
     List<Order> readOrders(Path path) throws IOException;
 
+    String getSupportedExtension();
+
 }

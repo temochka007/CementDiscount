@@ -2,6 +2,7 @@ package org.example.adapter;
 
 import org.example.writer.FileWriter;
 
+import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.security.cert.CertPathParameters;
 import java.util.HashMap;
@@ -14,20 +15,22 @@ public class ChoiceExpansionFactory {
    public ChoiceExpansionFactory(){
        adapterExtension = new HashMap<>();
        adapterExtension.put(".txt", new TxtFileAdapter());
-       adapterExtension.put("_ext", new GridFileAdapter());
+       adapterExtension.put("", new GridFileAdapter());
    }
-    public FileSource getAdapter(Path path){
+   public String getExtension(Path path){
        String fileName = path.getFileName().toString();
        int index = fileName.lastIndexOf(".");
-
-       String key;
-       if (index <= 0 || index == fileName.length() -1){
-           key = "_ext";
-       }else {
-           key = ".txt";
+       if(index <= 0 || index == fileName.length() -1){
+           return "";
        }
-       FileSource adapter = adapterExtension.get(key);
+       return fileName.substring(index);
+   }
 
-       return adapter;
+    public FileSource getAdapter(Path path){
+       String key = getExtension(path);
+
+       FileSource adapter = adapterExtension.get(key);
+     return adapter;
     }
+
 }

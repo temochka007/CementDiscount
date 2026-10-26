@@ -27,6 +27,11 @@ public class TxtFileAdapter implements FileSource {
         return orders;
     }
 
+    @Override
+    public String getSupportedExtension() {
+        return "";
+    }
+
     public boolean canRead(Path path){
         String fileName = path.getFileName().toString();
         return fileName.endsWith(".txt");

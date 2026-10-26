@@ -26,6 +26,12 @@ public class GridFileAdapter implements FileSource {
         }
         return orders;
     }
+
+    @Override
+    public String getSupportedExtension() {
+        return "";
+    }
+
     public boolean canRead(Path path){
         String fileName = path.getFileName().toString();
         int index = fileName.lastIndexOf(".");
