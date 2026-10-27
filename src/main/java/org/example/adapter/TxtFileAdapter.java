@@ -29,7 +29,7 @@ public class TxtFileAdapter implements FileSource {
 
     @Override
     public String getSupportedExtension() {
-        return "";
+        return ".txt";
     }
 
     public boolean canRead(Path path){

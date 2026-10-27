@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.adapter.ChoiceExpansionFactory;
+import org.example.adapter.FileSource;
 import org.example.adapter.GridFileAdapter;
 import org.example.adapter.TxtFileAdapter;
 import org.example.service.DiscountBusiness;
@@ -19,7 +20,11 @@ public class Main {
 
         ConsoleForUser user = new ConsoleForUser();
 
-        ChoiceExpansionFactory factory = new ChoiceExpansionFactory();
+        Map<String, FileSource> adapterExtension = new HashMap<>();
+        adapterExtension.put(".txt", new TxtFileAdapter());
+        adapterExtension.put("", new GridFileAdapter());
+
+        ChoiceExpansionFactory factory = new ChoiceExpansionFactory(adapterExtension);
 
         DiscountBusiness discountBusiness = new DiscountBusiness(50.0, 5.0);
         PriceCalculator priceCalculator = new PriceCalculator(10.0, discountBusiness);
@@ -34,6 +39,8 @@ public class Main {
             Map<String, Double> sorting = algorithm.algorithmic(intputPath);
 
             fileWriter.writeResult(outputPath, sorting);
+
+            user.message(outputPath);
 
         }catch (IOException e){
             System.err.println("Ошибка работы с файлами: ");

@@ -28,6 +28,9 @@ public class ConsoleForUser {
 
         return path;
     }
+    public void message (Path output){
+        System.out.println("Готово, результат записан.");
+    }
 
     public void close(){
         scanner.close();
